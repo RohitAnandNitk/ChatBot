@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./ChatPage.css"; // Import the CSS file
 import { googleLogout } from "@react-oauth/google";
 
+const backendUrl= "https://chatbot-vg3m.onrender.com";
+
+
 const ChatPage = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
@@ -29,7 +32,7 @@ const ChatPage = () => {
 
     const getBotResponse = async (userInput) => {
         try {
-            const response = await fetch("http://localhost:3001/chat", {
+            const response = await fetch(`${backendUrl}/chat`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
