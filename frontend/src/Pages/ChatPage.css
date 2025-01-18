@@ -2,7 +2,7 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+ 
     height: 100vh;
     background-color: #f4f4f4;
     font-family: Arial, sans-serif;
@@ -46,7 +46,7 @@
     gap: 10px;
     padding: 10px;
     background-color: #f5f5f5;
-    height: 400px;
+    height: 500px;
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -64,12 +64,20 @@
 
 .bot-message {
     align-self: flex-start;
-    background-color: #f8d7da;
-    color: #842029;
-    padding: 10px;
-    border-radius: 10px;
+    background-color: #f78e51; /* Light blue background */
+    color: #0a362f; /* Dark green text */
+    padding: 10px 15px;
+    border-radius: 12px;
     max-width: 70%;
-    word-wrap: break-word;
+    white-space: pre-wrap; /* Preserve line breaks */
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.bot-message strong {
+    font-weight: bold; /* Highlight bold sections */
+    color: #00695c; /* Darker shade for bold text */
 }
 
 

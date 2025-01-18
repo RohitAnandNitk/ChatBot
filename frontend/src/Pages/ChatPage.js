@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./ChatPage.css"; // Import the CSS file
 import { googleLogout } from "@react-oauth/google";
 
-const backendUrl= "https://chatbot-vg3m.onrender.com";
-
+const backendUrl = "https://chatbot-vg3m.onrender.com";
+// const backendUrl = "http://localhost:3001";
 
 const ChatPage = () => {
     const [messages, setMessages] = useState([]);
@@ -23,7 +23,7 @@ const ChatPage = () => {
         } catch (error) {
             setMessages((prev) => [
                 ...prev,
-                { text: "Bot: Sorry, an error occurred.", sender: "bot" },
+                { text: "🤖 Sorry, an error occurred.", sender: "bot" },
             ]);
         }
 
@@ -39,18 +39,27 @@ const ChatPage = () => {
                 },
                 body: JSON.stringify({ message: userInput }),
             });
-
+    
             if (!response.ok) {
                 throw new Error("Failed to fetch response from the server");
             }
-
+    
             const data = await response.json();
-            return { text: `Bot: ${data.message}`, sender: "bot" };
+    
+            // Format the response for better readability
+            const formattedResponse = `
+    Disease : ${data.disease}  
+    Medicine : ${data.medicine}  
+    Note : ${data.note}
+            `;
+    
+            return { text: `🤖 ${formattedResponse}`, sender: "bot" };
         } catch (error) {
             console.error("Error fetching bot response:", error);
-            return { text: "Bot: Sorry, I'm unable to respond right now.", sender: "bot" };
+            return { text: "🤖 Sorry, I'm unable to respond right now.", sender: "bot" };
         }
     };
+    
 
     const handleLogout = () => {
         googleLogout();
