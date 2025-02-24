@@ -1,47 +1,97 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+}
+
 .homepage-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
-    background-color: #f0f8ff;
-    font-family: Arial, sans-serif;
-    padding: 20px;
     text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #000, #222);
+    animation: fadeIn 1.5s ease-in-out;
 }
 
+/* Header Section */
 .homepage-header {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    transform: translateY(-20px);
+    animation: slideDown 1s ease-in-out forwards;
 }
 
-.homepage-header h1 {
-    font-size: 2.5rem;
-    color: #333;
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+}
+
+.title .highlight {
+    color: #1DB954;
 }
 
 .homepage-description {
+    margin-top: 15px;
     font-size: 1.2rem;
-    color: #555;
-    margin-top: 10px;
     line-height: 1.6;
     max-width: 600px;
+    color: #ccc;
+    font-weight: 300;
 }
 
+/* Button/Google Login Styling */
 .homepage-actions {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-.login-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+div[role="button"] {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 30px !important;
+    font-size: 1rem !important;
+    padding: 0.8rem 2rem !important;
 }
 
-.login-button:hover {
-    background-color: #0056b3;
+div[role="button"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px #1DB954;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .homepage-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .homepage-description {
+        font-size: 1rem;
+    }
 }

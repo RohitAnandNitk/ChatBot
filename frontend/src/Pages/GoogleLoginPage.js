@@ -1,52 +1,60 @@
-import React from 'react'
-// google console provide login oath
-import { GoogleOAuthProvider , GoogleLogin } from '@react-oauth/google';
+
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom";
 import "./GoogleLoginPage.css"; // Import the CSS file
+import {jwtDecode} from 'jwt-decode';
 
+const GoogleLoginPage = () => {
+    const navigate = useNavigate();
 
+    const handleSuccess = async (credentialResponse) => {
+        const decoded = jwtDecode(credentialResponse.credential);
+        const userInfo = {
+            name: decoded.name,
+            email: decoded.email,
+            picture: decoded.picture,
+        };
 
-const  GoogleLoginPage = () => {
-   
-  const navigate = useNavigate();
+        const response = await fetch("http://localhost:3001/user/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(userInfo),
+        });
 
-  const handleSucess = (credentialResponse) =>{
-      console.log("login sucessfully with " ,credentialResponse );
-      localStorage.setItem("google_token", credentialResponse.credential); // Save token locally
-      navigate("/chat-page");
-  }
-  const handleError = () =>{
-     console.log("Error during login");
-  }
+        if (response.ok) {
+            console.log("Logged in successfully");
+            navigate("/chat-page");
+        } else {
+            console.log("Login failed");
+        }
+    };
 
+    const handleError = () => {
+        console.error("Error during login");
+    };
 
-
-
-  return (
-    <div>
+    return (
         <div className="homepage-container">
             <header className="homepage-header">
-                <h1>Welcome to ChatBot</h1>
+                <h1 className="title">Welcome to <span className="highlight">MediChat</span>!</h1>
                 <p className="homepage-description">
-                    ChatBot is your intelligent companion that can assist you in solving problems, 
-                    answering questions, and having engaging conversations. Designed for simplicity 
-                    and efficiency, ChatBot makes your day-to-day tasks easier.
+                    MediChat is your personalized healthcare assistant, here to provide accurate 
+                    medical guidance and support. Chat with us for reliable health tips, 
+                    medication advice, and more — all in one place.<br /> Your Health, Our Priority!
                 </p>
             </header>
             <div className="homepage-actions">
-              <h1> Log in with Google</h1>
-                  <GoogleOAuthProvider clientId='206553926368-8cfbdufn01frh7hpaol33704ig4q4va9.apps.googleusercontent.com'>
+                <GoogleOAuthProvider clientId="206553926368-8cfbdufn01frh7hpaol33704ig4q4va9.apps.googleusercontent.com">
                     <GoogleLogin
-                      onSuccess={handleSucess}
-                      onError={handleError}
-                    ></GoogleLogin>
+                        onSuccess={handleSuccess}
+                        onError={handleError}
+                        shape="pill"
+                    />
                 </GoogleOAuthProvider>
             </div>
         </div>
+    );
+};
 
-    </div>
-    
-  )
-}
-
-export default GoogleLoginPage
+export default GoogleLoginPage;
