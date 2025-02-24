@@ -23,18 +23,30 @@ export const newUser = async (req, res) => {
 
         console.log("Generated token:", token);
 
-        const cookieOptions = {
-            httpOnly: true, // Secure cookie in production
-            sameSite: "strict",
-            secure : true,
-            maxAge: 10 * 60 * 60 * 1000, // 10 hours
-            path: "/", 
-            sameSite: "None",
-        };
+        // const cookieOptions = {
+        //     httpOnly: true, // Secure cookie in production
+        //     sameSite: "strict",
+        //     secure : true,
+        //     maxAge: 10 * 60 * 60 * 1000, // 10 hours
+        //     path: "/", 
+        //     sameSite: "None",
+        // };
 
-        if (process.env.NODE_ENV === "production") {
-            cookieOptions.secure = true;
-        }
+        // if (process.env.NODE_ENV === "production") {
+        //     cookieOptions.secure = true;
+        // }
+ 
+        const cookieOptions = {
+            httpOnly: true,  // Prevent client-side access
+            secure: process.env.NODE_ENV === "production",  // Use secure cookies in production
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Strict", 
+            maxAge: 10 * 60 * 60 * 1000, // 10 hours
+            path: "/",
+        };
+        
+
+   
+
 
         // ✅ Always set the cookie, whether new or existing user
         res.cookie("authToken", token, cookieOptions);
