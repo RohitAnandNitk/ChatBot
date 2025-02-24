@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "./GoogleLoginPage.css"; // Import the CSS file
 import {jwtDecode} from 'jwt-decode';
 
+const backendUrl = "https://chatbot-vg3m.onrender.com";
+// const backendUrl = "http://localhost:3001";
+
 const GoogleLoginPage = () => {
     const navigate = useNavigate();
 
@@ -15,7 +18,7 @@ const GoogleLoginPage = () => {
             picture: decoded.picture,
         };
 
-        const response = await fetch("http://localhost:3001/user/add", {
+        const response = await fetch(`${backendUrl}/user/add`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
